@@ -15,6 +15,9 @@ def process_image(uploaded_file):
     try:
         # Read the file
         image = Image.open(io.BytesIO(uploaded_file.read()))
+
+        ##hadeh perlu di convert ke rgb segala karena PIL error
+        image = image.convert('RGB')
         save_filename = 'test_image.jpg'
         image.save(save_filename)
  
