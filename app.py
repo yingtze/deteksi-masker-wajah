@@ -6,7 +6,7 @@ from PIL import Image
 from image_extensions import IMAGE_EXTENSIONS
 
 # Initialize YOLO model
-model = YOLO('deteksi-motif-batik.pt')
+model = YOLO('deteksi-masker-wajah.pt')
 
 def process_image(uploaded_file):
     # Check if a file is uploaded
