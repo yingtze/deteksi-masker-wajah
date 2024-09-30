@@ -1,11 +1,12 @@
 import streamlit as st
 from ultralytics import YOLO
 import io
+import numpy as np
 from PIL import Image
 from image_extensions import IMAGE_EXTENSIONS
 
 # Initialize YOLO model
-model = YOLO('deteksi-masker-wajah.pt')
+model = YOLO('best.pt')
 
 def process_image(uploaded_file):
     # Check if a file is uploaded
@@ -18,7 +19,8 @@ def process_image(uploaded_file):
 
         ##hadeh perlu di convert ke rgb segala karena PIL error
         image = image.convert('RGB')
-        save_filename = 'test_image.jpg'
+
+        save_filename = 'test_image.png'
         image.save(save_filename)
  
         # Run the model
@@ -26,6 +28,11 @@ def process_image(uploaded_file):
         
         # Extract the processed image directly from the results
         result_image = results[0].plot()  # The `plot` method returns an array with the detections drawn
+
+        #cek apakah result_image ada di BGR atau RGB
+        if result_image.shape[2] == 3:
+            #convert dari BGR ke RGB
+            result_image = result_image[:, :, ::-1]
         
         # Convert the result (which is a numpy array) back to a PIL Image
         result_pil_image = Image.fromarray(result_image)
