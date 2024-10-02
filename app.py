@@ -118,8 +118,8 @@ st.write("Upload gambar untuk dideteksi")
 display_sidebar()
 
 uploaded_file = st.file_uploader("Pilih gambar...",type=IMAGE_EXTENSIONS)
-# # enable_webcam = st.checkbox("Aktifkan webcam")
-# img_from_webcam = st.camera_input("Ambil gambar dengan webcam", disabled=not enable_webcam)
+enable_webcam = st.checkbox("Aktifkan webcam")
+img_from_webcam = st.camera_input("Ambil gambar dengan webcam", disabled=not enable_webcam)
 # img_stream = camera_input_live()
 
 if uploaded_file is not None:
