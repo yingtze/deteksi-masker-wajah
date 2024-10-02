@@ -7,7 +7,7 @@ from PIL import Image
 # import cv2
 # import math
 from image_extensions import IMAGE_EXTENSIONS
-from camera_input_live import camera_input_live
+# from camera_input_live import camera_input_live
 
 # Initialize YOLO model
 model = YOLO('deteksi-masker-wajah.pt')
