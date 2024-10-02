@@ -26,7 +26,7 @@ def process_image(image):
         save_filename = 'test_image.png'
         image.save(save_filename)
  
-        # jalankan model
+        # jalankan prediksi
         results = model.predict(source=save_filename, save=False)
         
         # eksrak gambar yang sudah diproses langsung dari hasil
