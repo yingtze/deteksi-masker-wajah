@@ -68,8 +68,7 @@ def process_stream(image_bytes):
 
         draw = ImageDraw.Draw(pil_image)
 
-        # load font arial.ttf
-        font = ImageFont.truetype("arial.ttf", 24)
+        font = ImageFont.truetype("Arial.ttf", 24)
 
         # proses hasil dan gambar bounding box dan label
         for r in results:
