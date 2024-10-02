@@ -117,8 +117,8 @@ st.write("Upload gambar untuk dideteksi")
 display_sidebar()
 
 uploaded_file = st.file_uploader("Pilih gambar...",type=IMAGE_EXTENSIONS)
-enable_webcam = st.checkbox("Aktifkan webcam")
-img_from_webcam = st.camera_input("Ambil gambar dengan webcam", disabled=not enable_webcam)
+# enable_webcam = st.checkbox("Aktifkan webcam")
+# img_from_webcam = st.camera_input("Ambil gambar dengan webcam", disabled=not enable_webcam)
 img_stream = camera_input_live()
 
 if uploaded_file is not None:
@@ -128,12 +128,12 @@ if uploaded_file is not None:
     else:
         st.image(result_image, caption='Gambar Terproses', use_column_width=True)
     
-if img_from_webcam is not None:
-    error, result_image = process_image(img_from_webcam.getvalue())
-    if error:
-        st.error(f"Error: {error}")
-    else:
-        st.image(result_image, caption='Gambar dari webcam Terproses', use_column_width=True)
+# if img_from_webcam is not None:
+#     error, result_image = process_image(img_from_webcam.getvalue())
+#     if error:
+#         st.error(f"Error: {error}")
+#     else:
+#         st.image(result_image, caption='Gambar dari webcam Terproses', use_column_width=True)
 
 if img_stream is not None:
     error, result_image = process_stream(img_stream.getvalue())
