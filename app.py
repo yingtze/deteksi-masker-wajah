@@ -1,22 +1,23 @@
 import streamlit as st
 from ultralytics import YOLO
 import io
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
-import cv2
-import math
+# import numpy as np
+from PIL import Image
+# ImageDraw, ImageFont
+# import cv2
+# import math
 from image_extensions import IMAGE_EXTENSIONS
 from camera_input_live import camera_input_live
 
 # Initialize YOLO model
 model = YOLO('deteksi-masker-wajah.pt')
 
-classNames = ['pakai masker', 'salah pakai masker', 'tanpa masker']
+# classNames = ['pakai masker', 'salah pakai masker', 'tanpa masker']
 
-# hasilkan warna berbeda untuk setiap kelas
-def get_color(index):
-    np.random.seed(index)
-    return tuple(np.random.randint(0, 255, 3))  # generate warna acak RGB
+# # hasilkan warna berbeda untuk setiap kelas
+# def get_color(index):
+#     np.random.seed(index)
+#     return tuple(np.random.randint(0, 255, 3))  # generate warna acak RGB
 
 def process_image(image):
     # cek apakah file diupload
@@ -54,54 +55,54 @@ def process_image(image):
     except Exception as e:
         return str(e), None  # error
     
-def process_stream(image_bytes):
-    try:
-        # convert byte data ke PIL image
-        pil_image = Image.open(io.BytesIO(image_bytes))
+# def process_stream(image_bytes):
+#     try:
+#         # convert byte data ke PIL image
+#         pil_image = Image.open(io.BytesIO(image_bytes))
 
-        # convert PIL image ke format OpenCV untuk diproses YOLO
-        img_np = np.array(pil_image.convert('RGB'))  # convert ke array numpy RGB
-        img_cv = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+#         # convert PIL image ke format OpenCV untuk diproses YOLO
+#         img_np = np.array(pil_image.convert('RGB'))  # convert ke array numpy RGB
+#         img_cv = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
 
-        # jalankan deteksi model
-        results = model(img_cv, stream=True)
+#         # jalankan deteksi model
+#         results = model(img_cv, stream=True)
 
-        draw = ImageDraw.Draw(pil_image)
+#         draw = ImageDraw.Draw(pil_image)
 
-        font = ImageFont.truetype("Arial.ttf", 24)
+#         font = ImageFont.truetype("Arial.ttf", 24)
 
-        # proses hasil dan gambar bounding box dan label
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                # bounding box
-                x1, y1, x2, y2 = box.xyxy[0]
-                x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+#         # proses hasil dan gambar bounding box dan label
+#         for r in results:
+#             boxes = r.boxes
+#             for box in boxes:
+#                 # bounding box
+#                 x1, y1, x2, y2 = box.xyxy[0]
+#                 x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
 
-                # confidence score
-                confidence = math.ceil((box.conf[0] * 100)) / 100
+#                 # confidence score
+#                 confidence = math.ceil((box.conf[0] * 100)) / 100
 
-                # class name
-                cls = int(box.cls[0])
-                class_name = classNames[cls]
+#                 # class name
+#                 cls = int(box.cls[0])
+#                 class_name = classNames[cls]
 
-                # dapatkan warna unik untuk setiap kelas
-                color = get_color(cls)
+#                 # dapatkan warna unik untuk setiap kelas
+#                 color = get_color(cls)
 
-                # gambar bounding box dengan warna unik
-                draw.rectangle([x1, y1, x2, y2], outline=color, width=3)
+#                 # gambar bounding box dengan warna unik
+#                 draw.rectangle([x1, y1, x2, y2], outline=color, width=3)
 
-                # text untuk class name dan confidence
-                text = f"{class_name} ({confidence})"
+#                 # text untuk class name dan confidence
+#                 text = f"{class_name} ({confidence})"
                 
-                # gambar class name dan confidence tanpa outline, dengan font size yang diperbesar
-                # draw.text((x1, y1 - 30), text, fill="white", font=font)
-                draw.text((x1, y1 - 30), text, fill=color, font=font)
+#                 # gambar class name dan confidence tanpa outline, dengan font size yang diperbesar
+#                 # draw.text((x1, y1 - 30), text, fill="white", font=font)
+#                 draw.text((x1, y1 - 30), text, fill=color, font=font)
             
-            return None, pil_image
+#             return None, pil_image
         
-    except Exception as e:
-        return str(e), None
+#     except Exception as e:
+#         return str(e), None
 
 def display_sidebar():
     try:
@@ -117,9 +118,9 @@ st.write("Upload gambar untuk dideteksi")
 display_sidebar()
 
 uploaded_file = st.file_uploader("Pilih gambar...",type=IMAGE_EXTENSIONS)
-# enable_webcam = st.checkbox("Aktifkan webcam")
+# # enable_webcam = st.checkbox("Aktifkan webcam")
 # img_from_webcam = st.camera_input("Ambil gambar dengan webcam", disabled=not enable_webcam)
-img_stream = camera_input_live()
+# img_stream = camera_input_live()
 
 if uploaded_file is not None:
     error, result_image = process_image(uploaded_file)
@@ -128,16 +129,16 @@ if uploaded_file is not None:
     else:
         st.image(result_image, caption='Gambar Terproses', use_column_width=True)
     
-# if img_from_webcam is not None:
-#     error, result_image = process_image(img_from_webcam.getvalue())
-#     if error:
-#         st.error(f"Error: {error}")
-#     else:
-#         st.image(result_image, caption='Gambar dari webcam Terproses', use_column_width=True)
-
-if img_stream is not None:
-    error, result_image = process_stream(img_stream.getvalue())
+if img_from_webcam is not None:
+    error, result_image = process_image(img_from_webcam.getvalue())
     if error:
         st.error(f"Error: {error}")
     else:
-        st.image(result_image, caption='Streaming video', use_column_width=True)
+        st.image(result_image, caption='Gambar dari webcam Terproses', use_column_width=True)
+
+# if img_stream is not None:
+#     error, result_image = process_stream(img_stream.getvalue())
+#     if error:
+#         st.error(f"Error: {error}")
+#     else:
+#         st.image(result_image, caption='Streaming video', use_column_width=True)
