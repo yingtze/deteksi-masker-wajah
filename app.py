@@ -123,7 +123,7 @@ img_from_webcam = st.camera_input("Ambil gambar dengan webcam", disabled=not ena
 # img_stream = camera_input_live()
 
 if uploaded_file is not None:
-    error, result_image = process_image(uploaded_file)
+    error, result_image = process_image(uploaded_file.getvalue())
     if error:
         st.error(f"Error: {error}")
     else:
