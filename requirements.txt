@@ -1,3 +1,5 @@
 ultralytics
+streamlit
+pandas
+pillow
 watchdog
-streamlit-camera-input-live

@@ -1,0 +1,46 @@
+/* ===== Deteksi Masker Wajah — Custom Theme ===== */
+
+/* Subtle card-like sections */
+section[data-testid="stSidebar"] {
+    background-color: #1a1a2e;
+}
+
+/* File uploader area */
+[data-testid="stFileUploader"] {
+    border: 2px dashed #4a4a6a;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+/* Table styling */
+[data-testid="stTable"] {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Buttons */
+.stButton > button {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Slider */
+[data-testid="stSlider"] {
+    padding-top: 0.5rem;
+}
+
+/* Caption styling */
+.stCaption {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Hide hamburger menu & footer */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
